@@ -20,4 +20,9 @@ class Student extends Model
     {
         return $this->belongsToMany('App\Discipline', 'disciplines_students', 'discipline_id', 'student_id');
     }
+
+    public function getDisciplinesIds()
+    {
+        return $this->discipline()->pluck('disciplines.id');
+    }
 }

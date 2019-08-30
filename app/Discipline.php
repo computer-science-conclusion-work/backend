@@ -20,4 +20,14 @@ class Discipline extends Model
     {
         return $this->belongsToMany('App\Student', 'disciplines_students', 'student_id', 'discipline_id');
     }
+
+    public function discipline()
+    {
+        return $this->belongsToMany('App\Discipline', 'disciplines_disciplines', 'discipline_id', 'discipline_id');
+    }
+
+    public function getDisciplinesIds()
+    {
+        return $this->discipline()->pluck('disciplines.id');
+    }
 }
