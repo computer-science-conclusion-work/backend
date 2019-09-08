@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Helpers\Constants;
 use App\User;
 
 class UsersTableSeeder extends Seeder
@@ -14,12 +15,12 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'id' => 1,
+            'id' => Constants::ROLE_ADMIN,
             'name' => 'adm',
             'email' => 'adm@pucminas.com.br',
             'password' => bcrypt('123456'),
-            'id_role' => 1,
-            'id_system_user' => 1,
+            'id_role' => Constants::ROLE_ADMIN,
+            'id_system_user' => Constants::ROLE_ADMIN,
             'created_at' => new DateTime,
             'updated_at' => new DateTime,
         ]);

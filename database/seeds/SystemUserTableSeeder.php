@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Helpers\Constants;
 use App\SystemUser;
 
 class SystemUserTableSeeder extends Seeder
@@ -14,7 +15,7 @@ class SystemUserTableSeeder extends Seeder
     public function run()
     {
         SystemUser::create([
-            'id' => 1
+            'id' => Constants::ROLE_ADMIN
         ]);
     }
 }

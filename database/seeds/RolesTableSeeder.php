@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Helpers\Constants;
 use App\Role;
 
 class RolesTableSeeder extends Seeder
@@ -14,17 +15,17 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         Role::create([
-            'id' => 1, 
+            'id' => Constants::ROLE_ADMIN, 
             'role'  => 'Administrador',
         ]);
 
         Role::create([
-            'id' => 2, 
+            'id' => Constants::ROLE_TEACHER, 
             'role'  => 'Professor',
         ]);
 
         Role::create([
-            'id' => 3, 
+            'id' => Constants::ROLE_STUDENT,
             'role'  => 'Aluno',
         ]);
     }
