@@ -18,16 +18,48 @@ class Discipline extends Model
 
     public function student()
     {
-        return $this->belongsToMany('App\Student', 'disciplines_students', 'student_id', 'discipline_id');
+        return $this->belongsToMany('App\Student', 'students_disciplines', 'id_student', 'id_discipline');
     }
 
-    public function discipline()
+    // PREREQUISITES
+    public function prerequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'disciplines_disciplines', 'discipline_id', 'discipline_id');
+        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_a', 'id_discipline_b');
     }
 
-    public function getDisciplinesIds()
+    public function reversePrerequisite()
     {
-        return $this->discipline()->pluck('disciplines.id');
+        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_b', 'id_discipline_a');
+    }
+
+    public function getPrerequisitesIds()
+    {
+        return $this->prerequisite()->pluck('disciplines.id');
+    }
+
+    public function getReversePrerequisitesIds()
+    {
+        return $this->reversePrerequisite()->pluck('disciplines.id');
+    }
+
+    // COREQUISITES
+    public function corequisite()
+    {
+        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_a', 'id_discipline_b');
+    }
+
+    public function reverseCorequisite()
+    {
+        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_b', 'id_discipline_a');
+    }
+
+    public function getCorequisitesIds()
+    {
+        return $this->corequisite()->pluck('disciplines.id');
+    }
+
+    public function getReverseCorequisitesIds()
+    {
+        return $this->reverseCorequisite()->pluck('disciplines.id');
     }
 }

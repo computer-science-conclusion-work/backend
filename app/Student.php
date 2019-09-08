@@ -18,7 +18,12 @@ class Student extends Model
 
     public function discipline()
     {
-        return $this->belongsToMany('App\Discipline', 'disciplines_students', 'discipline_id', 'student_id');
+        return $this->belongsToMany('App\Discipline', 'students_disciplines', 'id_discipline', 'id_student');
+    }
+
+    public function system_user()
+    {
+        return $this->hasOne('App\SystemUser');
     }
 
     public function getDisciplinesIds()
