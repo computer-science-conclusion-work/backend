@@ -26,7 +26,7 @@ class RolesTableSeeder extends Seeder
 
         Role::create([
             'id' => Constants::ROLE_STUDENT,
-            'role'  => 'Aluno',
+            'role'  => 'Estudante',
         ]);
     }
 }
