@@ -36,11 +36,7 @@ Route::group([
 
         // Rotas de students
         Route::resource('students', 'StudentsController');
-        Route::get('students/{id}/disciplines', 'StudentsController@getDisciplinePerID');
-        Route::post('students/{id}/disciplines/save', 'StudentsController@saveDisciplinePerID');
 
         // Rotas de disciplines
-        Route::resource('discipline', 'DisciplineController');
-        Route::get('discipline/{id}/disciplines', 'DisciplineController@getDisciplinePerID');
-        Route::post('discipline/{id}/disciplines/save', 'DisciplineController@saveDisciplinePerID');
+        Route::resource('disciplines', 'DisciplinesController');
     });
