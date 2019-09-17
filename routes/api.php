@@ -13,30 +13,34 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api', 'cors')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => 'auth',
+    'middleware' => 'cors'
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
 });
 
-    Route::group([
-      'middleware' => 'auth:api'
-    ], function() {
-        Route::get('logout', 'AuthController@logout');
-        Route::get('user', 'AuthController@user');
+Route::group([ 
+    'middleware' => [
+        'auth:api',
+        'cors'
+    ],
+ ], function() {
+    Route::get('logout', 'AuthController@logout');
+    Route::get('user', 'AuthController@user');
 
-        // Rotas de users
-        Route::get('users/init', 'UserController@init');
-        Route::resource('users', 'UserController');
+    // Rotas de users
+    Route::get('users/init', 'UserController@init');
+    Route::resource('users', 'UserController');
 
-        // Rotas de students
-        Route::resource('students', 'StudentsController');
+    // Rotas de students
+    Route::resource('students', 'StudentsController');
 
-        // Rotas de disciplines
-        Route::resource('disciplines', 'DisciplinesController');
-    });
+    // Rotas de disciplines
+    Route::resource('disciplines', 'DisciplinesController');
+});
