@@ -12,4 +12,6 @@ class SystemUser extends Model
      * @var string
      */
     protected $table = 'system_users';
+
+    public $timestamps = true;
 }

@@ -38,6 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public $timestamps = true;
+
     public function system_user()
     {
         return $this->hasOne('App\SystemUser');

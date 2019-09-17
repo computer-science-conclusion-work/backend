@@ -16,6 +16,8 @@ class Discipline extends Model
      */
     protected $table = 'disciplines';
 
+    public $timestamps = true;
+
     public function student()
     {
         return $this->belongsToMany('App\Student', 'students_disciplines', 'id_student', 'id_discipline');

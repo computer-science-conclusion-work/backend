@@ -12,4 +12,6 @@ class Prerequisite extends Model
      * @var string
      */
     protected $table = 'prerequisites';
+
+    public $timestamps = true;
 }

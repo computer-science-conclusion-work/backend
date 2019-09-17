@@ -23,6 +23,8 @@ class StudentTableSeeder extends Seeder
             $student = new Student();
             $student->registration = str_replace('"','',$d[0]);
             $student->name = str_replace('"','',$d[1]);
+            $student->egress_date = null;
+            $student->id_system_user = null;
             $student->save();
         }
     }

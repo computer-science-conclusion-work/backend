@@ -21,4 +21,6 @@ class Stage extends Model
     protected $fillable = [
         'stage'
     ];
+
+    public $timestamps = true;
 }

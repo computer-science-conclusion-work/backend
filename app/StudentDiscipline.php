@@ -13,6 +13,8 @@ class StudentDiscipline extends Model
      */
     protected $table = 'students_disciplines';
 
+    public $timestamps = true;
+
     public function stage()
     {
         return $this->hasOne('App\Stage');

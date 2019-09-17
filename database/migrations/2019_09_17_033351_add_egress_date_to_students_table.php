@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIdSystemUserToStudentsTable extends Migration
+class AddEgressDateToStudentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddIdSystemUserToStudentsTable extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->integer('id_system_user')->unsigned()->nullable();
-            $table->foreign('id_system_user')->references('id')->on('system_users');
+            $table->date('egress_date')->nullable();
         });
     }
 
@@ -27,7 +26,7 @@ class AddIdSystemUserToStudentsTable extends Migration
     public function down()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->dropForeign(['id_system_user']);
+            $table->dropColumn('egress_date');
         });
     }
 }

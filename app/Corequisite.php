@@ -12,4 +12,6 @@ class Corequisite extends Model
      * @var string
      */
     protected $table = 'corequisites';
+
+    public $timestamps = true;
 }

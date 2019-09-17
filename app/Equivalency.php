@@ -12,4 +12,6 @@ class Equivalency extends Model
      * @var string
      */
     protected $table = 'equivalencies';
+
+    public $timestamps = true;
 }
