@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function init() {
         
-        $roles = Role::get(['id', 'identifier AS value']);
+        $roles = Role::get(['id', 'role AS value']);
         
         return response()->json([
             'code'    => 201,
