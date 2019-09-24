@@ -13,7 +13,7 @@ class DisciplineRequest extends FormRequest
      */
     public function authorize()
     {
-        if(Auth::user()->role_id == Constants::ROLE_ADMIN) {
+        if(Auth::user()->id_role == Constants::ROLE_ADMIN) {
             return true;
         }
         return false;

@@ -11,15 +11,17 @@ use App\Role;
 
 class UserController extends Controller
 {
-    public function init() {
+    public function init($id) {
         
+        $user = User::find($id);
         $roles = Role::get(['id', 'role AS value']);
         
         return response()->json([
             'code'    => 201,
             'message' => '',
             'data'    => [
-                'roles'    => $roles,
+                'item'     => $user,
+                'roles'    => $roles
             ]
         ], 201);
     }

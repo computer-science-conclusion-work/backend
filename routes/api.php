@@ -35,7 +35,7 @@ Route::group([
     Route::get('user', 'AuthController@user');
 
     // Rotas de users
-    Route::get('users/init', 'UserController@init');
+    Route::get('users/init/{id}', 'UserController@init');
     Route::resource('users', 'UserController');
 
     // Rotas de students

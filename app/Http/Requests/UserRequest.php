@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 use App\Helpers\Constants;
+use Auth;
 
 class UserRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(Auth::user()->role_id == Constants::ROLE_ADMIN) {
+        if(Auth::user()->id_role == Constants::ROLE_ADMIN) {
             return true;
         }
         return false;
