@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\UserRequest;
+use App\SystemUser;
 use App\User;
 use App\Role;
 
@@ -38,7 +39,7 @@ class UserController extends Controller
 
         $users =  new User();
         $users = User::join('roles', 'users.id_role', '=', 'roles.id')
-        ->join('system_users', 'users.id_system_user', '=', 'system_users.id')
+        ->leftJoin('system_users', 'users.id_system_user', '=', 'system_users.id')
         ->select(
             'users.id',
             'users.name',
@@ -144,9 +145,12 @@ class UserController extends Controller
      */
     public function store(UserRequest $request) {
         try {
+            $system_user = new SystemUser();
+            $system_user->save();
 
             $user = new User($request->all());
             $user->password = Hash::make($request->password);
+            $user->id_system_user = $system_user->id;
             $user->save();
 
         } catch(\Exception $e) {

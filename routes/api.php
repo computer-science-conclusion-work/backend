@@ -43,4 +43,7 @@ Route::group([
 
     // Rotas de disciplines
     Route::resource('disciplines', 'DisciplinesController');
+
+    // Outras Rotas
+    Route::get('roles', 'RolesController@get');
 });
