@@ -125,14 +125,14 @@ class UserController extends Controller
         } catch(\Exception $e) {
             return response()->json([
                 'code'    => 403,
-                'message' => 'Ops... Houve um erro ao atualizar o registro.',
+                'message' => 'Ops... Houve um erro ao atualizar o usuário.',
                 'data'    => $e->getTraceAsString()
             ], 403);
         }
         
         return response()->json([
             'code'    => 200,
-            'message' => 'Registro atualizado com sucesso!',
+            'message' => 'Usuário atualizado com sucesso!',
             'data'    => [ 'item' => $user ]
         ], 200);
     }
@@ -156,15 +156,53 @@ class UserController extends Controller
         } catch(\Exception $e) {
             return response()->json([
                 'code'    => 403,
-                'message' => 'Ops... Houve um erro ao inserir o registro.',
+                'message' => 'Ops... Houve um erro ao inserir o usuário.',
                 'data'    => $e->getMessage()
             ], 403);
         }
         
         return response()->json([
             'code'    => 200,
-            'message' => 'Registro inserido com sucesso!',
+            'message' => 'Usuário inserido com sucesso!',
             'data'    => [ 'item' => $user ]
+        ], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        if (empty($user)) {
+            return response()->json([
+                'code'    => 403,
+                'message' => 'Usuário não encontrado.',
+                'data'    => [ ]
+            ], 403);
+        }
+
+        $system_user = SystemUser::find($user->id_system_user);
+        
+        try {
+            $user->delete();
+            $system_user->delete();
+        } catch(\Exception $e) {
+            return response()->json([
+                'code'    => 403,
+                'message' => 'Ops... Houve um erro ao remover o usuário.',
+                'data'    => $e->getMessage()
+            ], 403);
+        }
+        
+        return response()->json([
+            'code'    => 200,
+            'message' => 'Usuário deletado com sucesso!',
+            'data'  => [ 'items' => $user ]
         ], 200);
     }
 }
