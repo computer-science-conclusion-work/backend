@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Role;
 
 class RolesController extends Controller
 {
@@ -12,9 +13,9 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function get() {
+    public function roles(Request $request) {
 
-        $roles = $this::get(['id', 'role AS value']);
+        $roles = Role::get(['id', 'role AS value']);
 
         return response()->json([
             'code'    => 200,
