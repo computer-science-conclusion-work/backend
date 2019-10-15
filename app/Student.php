@@ -16,6 +16,15 @@ class Student extends Model
      */
     protected $table = 'students';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'registration', 'name', 'id_system_user' //TODO: , 'egress_date'
+    ];
+
     public $timestamps = true;
 
     public function discipline()

@@ -37,7 +37,6 @@ class UserController extends Controller
     {
         $filters = json_decode($request->get('filters'));
 
-        $users =  new User();
         $users = User::join('roles', 'users.id_role', '=', 'roles.id')
         ->leftJoin('system_users', 'users.id_system_user', '=', 'system_users.id')
         ->select(
@@ -48,22 +47,23 @@ class UserController extends Controller
             'system_users.id AS id_system_user'
         )->orderBy('users.name', 'ASC');
 
-        if(isset($filters->name)){
-            $users = $users->where('users.name', 'LIKE', '%'.$filters->name.'%');
+        if(isset($filters->id) && ($filters->id != '')){
+            $users = $users->where('users.id', '=', $filters->id);
         }
-        if(isset($filters->role_id)){
-            $users = $users->where('users.id_role', '=', $filters->role_id);
+        if(isset($filters->name) && ($filters->name != '')){
+            $users = $users->where('users.name', 'like', '%'.$filters->name.'%');
         }
-        $users = $users->get();
+        $users = $users->paginate((int)$request->get('rows'));
 
-        $filterRoles = Role::get(['id', 'role AS value']);
+        $roles = Role::get(['id', 'role AS value']);
 
         return response()->json([
             'code'    => 200,
             'message' => '',
             'data'    => [ 
                 'items' => $users,
-                'filterRoles' => $filterRoles
+                'roles' => $roles,
+                'filters' => $filters
                 ]
         ], 200);
     }

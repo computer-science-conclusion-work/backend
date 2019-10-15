@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Student;
 use App\Discipline;
-use App\Helpers\Constants;
 use App\Http\Requests\StudentRequest;
 
 class StudentsController extends Controller
@@ -24,11 +23,11 @@ class StudentsController extends Controller
         $students = Student::select('*')
             ->orderBy('students.id', 'ASC');
 
-        if(isset($filters->id) && ($filters->id != '')){
-            $students = $students->where('students.id', $filters->id);
+        if(isset($filters->registration) && ($filters->registration != '')){
+            $students = $students->where('students.registration', '=', $filters->registration);
         }
         
-        if(isset($filters->description) && ($filters->description != '')){
+        if(isset($filters->name) && ($filters->name != '')){
             $students = $students->where('students.name', 'like', "%{$filters->name}%");
         }
 
