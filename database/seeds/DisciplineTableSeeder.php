@@ -23,6 +23,8 @@ class DisciplineTableSeeder extends Seeder
             $discipline = new Discipline();
             $discipline->code = str_replace('"','',$d[0]);
             $discipline->name = str_replace('"','',$d[1]);
+            $discipline->alias = str_replace('"','',$d[2]);
+            $discipline->period = 0;
             $discipline->save();
         }
     }

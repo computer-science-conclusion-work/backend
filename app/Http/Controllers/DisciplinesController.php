@@ -23,12 +23,16 @@ class DisciplinesController extends Controller
         $disciplines = Discipline::select('*')
             ->orderBy('disciplines.id', 'ASC');
 
-        if(isset($filters->id) && ($filters->id != '')){
-            $disciplines = $disciplines->where('disciplines.id', $filters->id);
+        if(isset($filters->code) && ($filters->code != '')){
+            $disciplines = $disciplines->where('disciplines.code', $filters->code);
         }
         
-        if(isset($filters->description) && ($filters->description != '')){
+        if(isset($filters->name) && ($filters->name != '')){
             $disciplines = $disciplines->where('disciplines.name', 'like', "%{$filters->name}%");
+        }
+
+        if(isset($filters->period) && ($filters->period != '')){
+            $disciplines = $disciplines->where('disciplines.period', $filters->period);
         }
 
         $disciplines = $disciplines->paginate((int)$request->get('rows'));

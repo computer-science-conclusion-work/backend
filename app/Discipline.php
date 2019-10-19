@@ -16,6 +16,15 @@ class Discipline extends Model
      */
     protected $table = 'disciplines';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'code', 'name', 'alias', 'period'
+    ];
+
     public $timestamps = true;
 
     public function student()
