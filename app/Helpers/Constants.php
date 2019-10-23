@@ -15,4 +15,5 @@ class Constants {
     const STAGE_EXTRA_CURRICULUM = 3;
     const STAGE_ONGOING = 4;
     const STAGE_TO_ATTEND = 5;
+    const STAGE_CURRICULUM_EQUIVALENTS = 6;
 }

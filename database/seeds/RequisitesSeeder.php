@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DataTestSeeder extends Seeder
+class RequisitesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,10 +12,6 @@ class DataTestSeeder extends Seeder
     public function run()
     {
         $this->call([
-            StudentTableSeeder::class,
-            DisciplineTableSeeder::class,
-            StudentDisciplineTableSeeder::class,
-            EquivalencyTableSeeder::class,
             CorequisiteTableSeeder::class,
             PrerequisiteTableSeeder::class,
         ]);

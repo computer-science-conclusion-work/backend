@@ -38,5 +38,10 @@ class StageTableSeeder extends Seeder
             'id' => Constants::STAGE_TO_ATTEND,
             'stage'  => 'A Cursar',
         ]);
+
+        Stage::create([
+            'id' => Constants::STAGE_CURRICULUM_EQUIVALENTS,
+            'stage'  => 'Currículo Equivalentes',
+        ]);
     }
 }
