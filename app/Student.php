@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 use App\Discipline;
 
@@ -40,5 +41,63 @@ class Student extends Model
     public function getDisciplinesIds()
     {
         return $this->discipline()->pluck('disciplines.id');
+    }
+
+    public static function getStudentsMedian($filters) {
+
+        $registration_inner = $registration_outer = $name_inner = $name_outer = '';
+        
+        if(isset($filters->registration) && ($filters->registration != '')){
+            $registration_inner = "AND s_e.registration = {$filters->registration}";
+            $registration_outer = "AND students.registration = {$filters->registration}";
+        }
+
+        if(isset($filters->name) && ($filters->name != '')){
+            $name_inner = "AND s_e.name LIKE '%{$filters->name}%'";
+            $name_outer = "AND students.name LIKE '%{$filters->name}%'";
+        }
+
+        $query = DB::select("
+        SELECT done_disciplines.year_semester,
+            AVG(done_disciplines.note) AS median_note
+        FROM
+        (
+            SELECT students.id AS student_id,
+            students.registration,
+            students.name,
+            students_disciplines.id,
+            equivalents.id AS equivalent_id,
+            AVG(IFNULL(students_disciplines.note, equivalents.note)) AS note,
+            IFNULL(students_disciplines.year_semester, equivalents.year_semester) AS year_semester
+            FROM students
+            INNER JOIN students_disciplines
+            ON students.id = students_disciplines.id_student
+            LEFT JOIN equivalencies
+            ON students_disciplines.id = equivalencies.id_student_discipline_a
+            LEFT JOIN (
+                SELECT sd_e.id, sd_e.note, sd_e.year_semester
+                FROM students AS s_e
+                INNER JOIN students_disciplines AS sd_e
+                ON s_e.id = sd_e.id_student
+                WHERE sd_e.id_stage = 2
+                {$registration_inner}
+                {$name_inner}
+            ) AS equivalents
+            ON equivalencies.id_student_discipline_b = equivalents.id
+            WHERE students_disciplines.id_stage = 1
+            {$registration_outer}
+            {$name_outer}
+            GROUP BY students.id,
+            students.registration,
+            students.name,
+            students_disciplines.id,
+            equivalents.id,
+            IFNULL(students_disciplines.year_semester, equivalents.year_semester)
+        ) AS done_disciplines
+        GROUP BY done_disciplines.year_semester
+        HAVING done_disciplines.year_semester IS NOT NULL;
+        ");
+
+        return $query;
     }
 }

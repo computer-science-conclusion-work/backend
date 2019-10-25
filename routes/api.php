@@ -40,6 +40,7 @@ Route::group([
 
     // Rotas de students
     Route::resource('students', 'StudentsController');
+    Route::get('students_median', 'StudentsController@getStudentsMedian');
 
     // Rotas de disciplines
     Route::resource('disciplines', 'DisciplinesController');

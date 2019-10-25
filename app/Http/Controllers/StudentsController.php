@@ -197,4 +197,22 @@ class StudentsController extends Controller
             'data'  => [ 'items' => $student ]
         ], 200);
     }
+
+    /**
+     *
+     * @param  App\Http\Requests\StudentRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getStudentsMedian(StudentRequest $request)
+    {
+        $filters = json_decode($request->get('filters'));
+
+        $student = Student::getStudentsMedian($filters);
+        
+        return response()->json([
+            'code'    => 200,
+            'message' => '',
+            'data'  => [ 'items' => $student ]
+        ], 200);
+    }
 }
