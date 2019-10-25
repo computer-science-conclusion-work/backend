@@ -43,6 +43,30 @@ class Student extends Model
         return $this->discipline()->pluck('disciplines.id');
     }
 
+    public static function getStudents($filters) {
+
+        $registration = $name = '';
+        
+        if(isset($filters->registration) && ($filters->registration != '')){
+            $registration = "AND students.registration = {$filters->registration}";
+        }
+
+        if(isset($filters->name) && ($filters->name != '')){
+            $name = "AND students.name LIKE '%{$filters->name}%'";
+        }
+
+        $query = DB::select("
+        SELECT students.id,
+            students.name
+        FROM students
+        WHERE students.id IS NOT NULL
+        {$registration}
+        {$name};
+        ");
+
+        return $query;
+    }
+
     public static function getStudentsMedian($filters) {
 
         $registration_inner = $registration_outer = $name_inner = $name_outer = '';
@@ -58,8 +82,8 @@ class Student extends Model
         }
 
         $query = DB::select("
-        SELECT done_disciplines.year_semester,
-            AVG(done_disciplines.note) AS median_note
+        SELECT done_disciplines.year_semester AS x,
+            AVG(done_disciplines.note) AS y
         FROM
         (
             SELECT students.id AS student_id,
@@ -95,7 +119,8 @@ class Student extends Model
             IFNULL(students_disciplines.year_semester, equivalents.year_semester)
         ) AS done_disciplines
         GROUP BY done_disciplines.year_semester
-        HAVING done_disciplines.year_semester IS NOT NULL;
+        HAVING done_disciplines.year_semester IS NOT NULL
+        AND AVG(done_disciplines.note) IS NOT NULL;
         ");
 
         return $query;

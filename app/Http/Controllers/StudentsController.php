@@ -207,12 +207,22 @@ class StudentsController extends Controller
     {
         $filters = json_decode($request->get('filters'));
 
-        $student = Student::getStudentsMedian($filters);
+        $students_median = Student::getStudentsMedian($filters);
+        $students = Student::getStudents($filters);
+
+        if(sizeof($students) > 1) {
+            $students = sizeof($students);
+        } else if (sizeof($students) == 1) {
+            $students = $students[0]->name;
+        } else {
+            $students = '';
+        }
         
         return response()->json([
             'code'    => 200,
             'message' => '',
-            'data'  => [ 'items' => $student ]
+            'data'  => [ 'items' => $students_median,
+                         'students' => $students ]
         ], 200);
     }
 }
