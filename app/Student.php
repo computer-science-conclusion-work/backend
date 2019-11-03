@@ -28,9 +28,11 @@ class Student extends Model
 
     public $timestamps = true;
 
-    public function discipline()
+    public function discipline($stage_id)
     {
-        return $this->belongsToMany('App\Discipline', 'students_disciplines', 'id_discipline', 'id_student');
+        return $this->belongsToMany('App\Discipline', 'students_disciplines', 'id_student', 'id_discipline')
+            ->withPivot('year_semester', 'note', 'workload', 'credits', 'id_stage')
+            ->where('id_stage', '=', $stage_id);
     }
 
     public function system_user()

@@ -27,20 +27,22 @@ class Discipline extends Model
 
     public $timestamps = true;
 
-    public function student()
+    public function student($stage_id)
     {
-        return $this->belongsToMany('App\Student', 'students_disciplines', 'id_student', 'id_discipline');
+        return $this->belongsToMany('App\Student', 'students_disciplines', 'id_discipline', 'id_student')
+            ->withPivot('year_semester', 'note', 'workload', 'credits', 'id_stage')
+            ->where('id_stage', '=', $stage_id);
     }
 
     // PREREQUISITES
     public function prerequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_a', 'id_discipline_b');
+        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_b', 'id_discipline_a');
     }
 
     public function reversePrerequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_b', 'id_discipline_a');
+        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_a', 'id_discipline_b');
     }
 
     public function getPrerequisitesIds()
@@ -56,12 +58,12 @@ class Discipline extends Model
     // COREQUISITES
     public function corequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_a', 'id_discipline_b');
+        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_b', 'id_discipline_a');
     }
 
     public function reverseCorequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_b', 'id_discipline_a');
+        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_a', 'id_discipline_b');
     }
 
     public function getCorequisitesIds()

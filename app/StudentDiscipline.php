@@ -23,12 +23,12 @@ class StudentDiscipline extends Model
     // EQUIVALENCIES
     public function equivalency()
     {
-        return $this->belongsToMany('App\Equivalency', 'equivalencies', 'id_student_discipline_a', 'id_student_discipline_b');
+        return $this->belongsToMany('App\Equivalency', 'equivalencies', 'id_student_discipline_b', 'id_student_discipline_a');
     }
 
     public function reverseEquivalency()
     {
-        return $this->belongsToMany('App\Equivalency', 'equivalencies', 'id_student_discipline_b', 'id_student_discipline_a');
+        return $this->belongsToMany('App\Equivalency', 'equivalencies', 'id_student_discipline_a', 'id_student_discipline_b');
     }
 
     public function getEquivalenciesIds()

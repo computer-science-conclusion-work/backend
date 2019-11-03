@@ -208,32 +208,24 @@ class StudentsController extends Controller
     public function getStudentsDisciplines(StudentRequest $request, $id, $stage_id)
     {
         // TODO: Lista de StudentsDisciplines
-        return response()->json([
-            'code'    => 200,
-            'message' => '',
-            'data'  => [ 'items' => $request->all(),
-                         'id' => $id,
-                         'stage_id' => $stage_id ]
-        ], 200);
-    }
+        $student = Student::find($id);
 
-    /**
-     *
-     * @param  App\Http\Requests\StudentRequest  $request
-     * @param  int  $id
-     * @param  int  $stage_id
-     * @return \Illuminate\Http\Response
-     */
-    public function saveStudentsDisciplines(StudentRequest $request, $id, $stage_id)
-    {
-        // TODO: Salvar StudentsDisciplines
-        return response()->json([
-            'code'    => 200,
-            'message' => '',
-            'data'  => [ 'items' => $request->all(),
-                         'id' => $id,
-                         'stage_id' => $stage_id ]
-        ], 200);
+        if (empty($student)) {
+            return response()->json([
+                'code'    => 403,
+                'message' => 'Estudante não encontrado.',
+                'data'    => [ ]
+            ], 403);
+        } else {
+
+            $disciplines = $student->discipline($stage_id)->get();
+
+            return response()->json([
+                'code'    => 200,
+                'message' => '',
+                'data'  => [ 'items' => $disciplines ]
+            ], 200);
+        }
     }
 
     /**

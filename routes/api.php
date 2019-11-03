@@ -41,7 +41,6 @@ Route::group([
     // Rotas de students
     Route::resource('students', 'StudentsController');
     Route::get('students/{id}/stage/{stage_id}', 'StudentsController@getStudentsDisciplines');
-    Route::post('students/{id}/stage/{stage_id}', 'StudentsController@saveStudentsDisciplines');
     Route::get('students_median', 'StudentsController@getStudentsMedian');
 
     // Rotas de disciplines
