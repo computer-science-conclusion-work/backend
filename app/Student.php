@@ -23,16 +23,21 @@ class Student extends Model
      * @var array
      */
     protected $fillable = [
-        'registration', 'name', 'id_system_user' //TODO: , 'egress_date'
+        'registration', 'name', 'id_system_user', 'egress_date'
     ];
 
     public $timestamps = true;
 
     public function discipline($stage_id)
     {
-        return $this->belongsToMany('App\Discipline', 'students_disciplines', 'id_student', 'id_discipline')
-            ->withPivot('year_semester', 'note', 'workload', 'credits', 'id_stage')
-            ->where('id_stage', '=', $stage_id);
+        $query = $this->belongsToMany('App\Discipline', 'students_disciplines', 'id_student', 'id_discipline')
+            ->withPivot('year_semester', 'note', 'workload', 'credits', 'id_stage');
+
+        if(isset($stage_id) && $stage_id != null && $stage_id != ''){
+            $query->where('id_stage', '=', $stage_id);
+        }
+
+        return $query;
     }
 
     public function system_user()

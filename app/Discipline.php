@@ -29,9 +29,14 @@ class Discipline extends Model
 
     public function student($stage_id)
     {
-        return $this->belongsToMany('App\Student', 'students_disciplines', 'id_discipline', 'id_student')
-            ->withPivot('year_semester', 'note', 'workload', 'credits', 'id_stage')
-            ->where('id_stage', '=', $stage_id);
+        $query = $this->belongsToMany('App\Student', 'students_disciplines', 'id_discipline', 'id_student')
+            ->withPivot('year_semester', 'note', 'workload', 'credits', 'id_stage');
+        
+        if(isset($stage_id) && $stage_id != null && $stage_id != ''){
+            $query->where('id_stage', '=', $stage_id);
+        }
+
+        return $query;
     }
 
     // PREREQUISITES

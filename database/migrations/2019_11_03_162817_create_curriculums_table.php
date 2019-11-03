@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddEgressDateToStudentsTable extends Migration
+class CreateCurriculumsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddEgressDateToStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('students', function (Blueprint $table) {
-            $table->string('egress_date')->nullable();
+        Schema::create('curriculums', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddEgressDateToStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('students', function (Blueprint $table) {
-            $table->dropColumn('egress_date');
-        });
+        Schema::dropIfExists('curriculums');
     }
 }

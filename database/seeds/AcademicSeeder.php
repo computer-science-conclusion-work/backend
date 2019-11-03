@@ -12,6 +12,7 @@ class AcademicSeeder extends Seeder
     public function run()
     {
         $this->call([
+            CurriculumTableSeeder::class,
             StudentTableSeeder::class,
             DisciplineTableSeeder::class,
             StudentDisciplineTableSeeder::class,
