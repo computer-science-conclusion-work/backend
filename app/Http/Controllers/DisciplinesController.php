@@ -205,7 +205,7 @@ class DisciplinesController extends Controller
     {
         $discipline = Discipline::find($id);
 
-        if (empty($student)) {
+        if (empty($discipline)) {
             return response()->json([
                 'code'    => 403,
                 'message' => 'Disciplina não encontrada.',
@@ -233,7 +233,7 @@ class DisciplinesController extends Controller
     {
         $discipline = Discipline::find($id);
 
-        if (empty($student)) {
+        if (empty($discipline)) {
             return response()->json([
                 'code'    => 403,
                 'message' => 'Disciplina não encontrada.',
