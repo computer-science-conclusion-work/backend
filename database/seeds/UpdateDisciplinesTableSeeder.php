@@ -99,7 +99,8 @@ class UpdateDisciplinesTableSeeder extends Seeder
                 } else {
                     $this->update($discipline, 'MD', Constants::PERIOD_3, Constants::CURRICULUM_3812);
                 }
-            } else if($discipline->name == "ÁLGEBRA LINEAR" || $discipline->name == "ALGEBRA LINEAR") {
+            } else if($discipline->name == "ÁLGEBRA LINEAR" ||
+                    $discipline->name == "ALGEBRA LINEAR") {
                 if($discipline->code == "47058") {
                     $this->update($discipline, 'Alg. Lin.', Constants::PERIOD_3, Constants::CURRICULUM_3811);
                 } else {
@@ -179,7 +180,8 @@ class UpdateDisciplinesTableSeeder extends Seeder
                 } else {
                     $this->update($discipline, 'Compila.', Constants::PERIOD_7, Constants::CURRICULUM_3812);
                 }
-            } else if($discipline->name == "INTELIGÊNCIA ARTIFICIAL" || $discipline->name == "INTELIGÊNCIA ARTIFICIAL (Virtual)") {
+            } else if($discipline->name == "INTELIGÊNCIA ARTIFICIAL" ||
+                $discipline->name == "INTELIGÊNCIA ARTIFICIAL (Virtual)") {
                 $this->update($discipline, 'IA', Constants::PERIOD_7, Constants::CURRICULUM_3812);
             } else if($discipline->name == "LABORATÓRIO DE REDES E SISTEMAS OPERACIONAIS") {
                 $this->update($discipline, 'LRSO', Constants::PERIOD_7, Constants::CURRICULUM_3812);

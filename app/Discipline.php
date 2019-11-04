@@ -42,12 +42,14 @@ class Discipline extends Model
     // PREREQUISITES
     public function prerequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_b', 'id_discipline_a');
+        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_a', 'id_discipline_b')
+            ->withTimestamps();
     }
 
     public function reversePrerequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_a', 'id_discipline_b');
+        return $this->belongsToMany('App\Discipline', 'prerequisites', 'id_discipline_b', 'id_discipline_a')
+            ->withTimestamps();
     }
 
     public function getPrerequisitesIds()
@@ -63,12 +65,14 @@ class Discipline extends Model
     // COREQUISITES
     public function corequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_b', 'id_discipline_a');
+        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_a', 'id_discipline_b')
+            ->withTimestamps();
     }
 
     public function reverseCorequisite()
     {
-        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_a', 'id_discipline_b');
+        return $this->belongsToMany('App\Discipline', 'corequisites', 'id_discipline_b', 'id_discipline_a')
+            ->withTimestamps();
     }
 
     public function getCorequisitesIds()
