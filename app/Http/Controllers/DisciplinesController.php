@@ -194,4 +194,60 @@ class DisciplinesController extends Controller
             'data'  => [ 'items' => $discipline ]
         ], 200);
     }
+
+    /**
+     *
+     * @param  App\Http\Requests\DisciplineRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getPrerequisites(DisciplineRequest $request, $id)
+    {
+        $discipline = Discipline::find($id);
+
+        if (empty($student)) {
+            return response()->json([
+                'code'    => 403,
+                'message' => 'Disciplina não encontrada.',
+                'data'    => [ ]
+            ], 403);
+        } else {
+
+            $prerequisites = $discipline->prerequisite()->get();
+
+            return response()->json([
+                'code'    => 200,
+                'message' => '',
+                'data'  => [ 'items' => $prerequisites ]
+            ], 200);
+        }
+    }
+
+    /**
+     *
+     * @param  App\Http\Requests\DisciplineRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getCorequisites(DisciplineRequest $request, $id)
+    {
+        $discipline = Discipline::find($id);
+
+        if (empty($student)) {
+            return response()->json([
+                'code'    => 403,
+                'message' => 'Disciplina não encontrada.',
+                'data'    => [ ]
+            ], 403);
+        } else {
+
+            $corequisites = $discipline->corequisite()->get();
+
+            return response()->json([
+                'code'    => 200,
+                'message' => '',
+                'data'  => [ 'items' => $corequisites ]
+            ], 200);
+        }
+    }
 }

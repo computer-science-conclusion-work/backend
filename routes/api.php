@@ -45,6 +45,8 @@ Route::group([
 
     // Rotas de disciplines
     Route::resource('disciplines', 'DisciplinesController');
+    Route::get('disciplines/{id}/prerequisites', 'DisciplinesController@getPrerequisites');
+    Route::get('disciplines/{id}/corequisites', 'DisciplinesController@getCorequisites');
 
     // Outras Rotas
     Route::get('roles', 'RolesController@roles');

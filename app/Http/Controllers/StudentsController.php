@@ -207,7 +207,6 @@ class StudentsController extends Controller
      */
     public function getStudentsDisciplines(StudentRequest $request, $id, $stage_id)
     {
-        // TODO: Lista de StudentsDisciplines
         $student = Student::find($id);
 
         if (empty($student)) {
