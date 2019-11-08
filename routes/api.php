@@ -42,6 +42,7 @@ Route::group([
     Route::resource('students', 'StudentsController');
     Route::get('students/{id}/stage/{stage_id}', 'StudentsController@getStudentsDisciplines');
     Route::get('students_median', 'StudentsController@getStudentsMedian');
+    Route::get('students_walking', 'StudentsController@getStudentsWalking');
 
     // Rotas de disciplines
     Route::resource('disciplines', 'DisciplinesController');

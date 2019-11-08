@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Helpers\Constants;
+
 use App\Student;
 use App\Discipline;
 use App\Http\Requests\StudentRequest;
@@ -253,5 +255,51 @@ class StudentsController extends Controller
             'data'  => [ 'items' => $students_median,
                          'students' => $students ]
         ], 200);
+    }
+
+    /**
+     *
+     * @param  App\Http\Requests\StudentRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getStudentsWalking(StudentRequest $request)
+    {
+        $filters = json_decode($request->get('filters'));
+
+        $student = Student::whereNotNull('egress_date');
+
+        if(isset($filters->registration) && ($filters->registration != '')){
+            $student->where("students.registration", "=", $filters->registration);
+        }
+
+        if(isset($filters->name) && ($filters->name != '')){
+            $student->where("students.name", "LIKE", '%'.$filters->name.'%');
+        }
+
+        $student = $student->first();
+
+        $disciplines = $student->discipline(
+            [
+                Constants::STAGE_CURRICULUM,
+                Constants::STAGE_EQUIVALENT,
+                Constants::STAGE_EXTRA_CURRICULUM
+            ]
+        )->get();
+
+        $student_walking = Student::getStudentsWalking($disciplines);
+
+        if(empty($student_walking)) {
+            return response()->json([
+                'code'    => 403,
+                'message' => 'Estudante não encontrado.',
+                'data'    => [ ]
+            ], 403);
+        }else {
+            return response()->json([
+                'code'    => 200,
+                'message' => '',
+                'data'  => [ 'items' => $student_walking ]
+            ], 200);
+        }
     }
 }

@@ -33,7 +33,9 @@ class Student extends Model
         $query = $this->belongsToMany('App\Discipline', 'students_disciplines', 'id_student', 'id_discipline')
             ->withPivot('year_semester', 'note', 'workload', 'credits', 'id_stage');
 
-        if(isset($stage_id) && $stage_id != null && $stage_id != ''){
+        if(isset($stage_id) && is_array($stage_id) && !empty($stage_id)){
+            $query->whereIn('id_stage', $stage_id);
+        } else if(isset($stage_id) && $stage_id != null && $stage_id != ''){
             $query->where('id_stage', '=', $stage_id);
         }
 
@@ -131,5 +133,19 @@ class Student extends Model
         ");
 
         return $query;
+    }
+
+    public static function getStudentsWalking($disciplines) {
+        $arrDisciplines = [];
+
+        forEach($disciplines as $discipline) {
+            $disciplinePre = Discipline::find($discipline->id);
+            array_push($arrDisciplines, [
+                "discipline"=>$discipline,
+                "prerequisites"=>$disciplinePre->prerequisite()->get()
+            ]);
+        }
+        
+        return $arrDisciplines;
     }
 }
